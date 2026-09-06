@@ -1457,7 +1457,8 @@
                     .opt-label { min-width: 40px; flex-shrink: 0; }
                     .opt-content { flex: 1; }
                     
-                    img { max-width: 60%; max-height: 240px; object-fit: contain; display: block; margin: 8px 0; border: 1px solid #ddd; }
+                    /* 統一設定圖片比例，避免有些過大或過小 */
+                    img { width: 80%; max-height: 380px; object-fit: contain; display: block; margin: 12px 0; border: 1px solid #ddd; padding: 4px; }
                     
                     .print-btn-container { text-align: center; margin-bottom: 30px; position: sticky; top: 0; background: rgba(255,255,255,0.9); padding: 15px; z-index: 100; border-bottom: 1px solid #ddd; }
                     .print-btn { background-color: #34d399; color: white; border: none; padding: 12px 24px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s; }
@@ -1526,10 +1527,10 @@
                 });
                 optionsHtml += '</div>';
 
+                // 移除原本額外的題號(q-num)，因為 q.q 文字本身已經自帶題號
                 printHtml += `
                 <div class="question-block">
                     <div class="question-row">
-                        <div class="q-num">${idx + 1}.</div>
                         <div class="q-text">${q.q}</div>
                     </div>
                     ${optionsHtml}
