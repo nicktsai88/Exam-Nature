@@ -367,7 +367,7 @@ window.QUIZ_DATA = [
   let currentQ = clamp(Number(reader.currentQ) || 1, 1, meta.total);
 
   const $ = (s, root = document) => root.querySelector(s);
-  const $ = (s, root = document) => [...root.querySelectorAll(s)];
+  const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const questionsEl = $("#questions");
   const navEl = $("#nav-grid");
   const liveEl = $("#live-status");
@@ -447,7 +447,7 @@ window.QUIZ_DATA = [
     </article>`;
   }
 
-  function observeCards() { $(".question-card").forEach(card => observer.observe(card)); }
+  function observeCards() { $$(".question-card").forEach(card => observer.observe(card)); }
   function renderQuestions() { questionsEl.innerHTML = questions.map(cardMarkup).join(""); requestAnimationFrame(observeCards); }
   function renderNav() {
     navEl.innerHTML = questions.map(q => {
