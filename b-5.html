@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#18323a">
+  <meta name="description" content="自然科第 5 回完整逐題解析與可分次完成的 50 題互動測驗。">
+  <title>自然科 3800 第 5 回｜完整解析與測驗</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="data.js"></script>
+  <script defer src="app.js"></script>
+  <script type="module" src="cloud.js"></script>
+</head>
+<body data-mode="analysis">
+  <div class="toolbar" role="toolbar" aria-label="閱讀與介面工具列">
+    <div class="toolbar__group" aria-label="介面切換">
+      <button id="analysis-mode" class="mode-btn" type="button" aria-pressed="true">📚 解析介面</button>
+      <button id="test-mode" class="mode-btn" type="button" aria-pressed="false">📝 測驗介面</button>
+      <button id="save-btn" type="button">💾 儲存並稍後繼續</button>
+    </div>
+    <div class="toolbar__group" aria-label="字級調整">
+      <button id="font-down" type="button" aria-label="縮小網頁字級 10 個百分點">A− 縮小字級</button>
+      <button id="font-reset" type="button" aria-label="重設網頁字級為 100%">重設 100%</button>
+      <button id="font-up" type="button" aria-label="放大網頁字級 10 個百分點">A＋ 放大字級</button>
+      <span id="font-pct" class="font-readout" aria-label="目前字級">100%</span>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="hero__card">
+      <p class="eyebrow">116 年國中會考｜自然科自學版</p>
+      <h1>贏戰 3800<br>第 5 回完整解析</h1>
+      <p>第 1～3 冊，共 50 題。每題保留「題幹＋全部選項」的同一張原卷截圖；解析介面直接看完整答案，測驗介面則在作答後只揭露該題解析。</p>
+      <p id="mode-note"><strong>解析介面：</strong>全卷答案與 A–D 解析直接顯示。</p>
+      <div class="hero__chips" aria-label="內容特色">
+        <span class="chip">50 題完整收錄</span>
+        <span class="chip">原卷單張題圖</span>
+        <span class="chip">手機等比例縮放</span>
+        <span class="chip chip--answer">正式答案已核對</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="learner-card" aria-labelledby="learner-title">
+    <div>
+      <strong id="learner-title">👤 目前身分：<span id="identity-name">訪客</span></strong>
+      <p id="cloud-status" class="status-line">訪客・僅儲存在此裝置。雲端功能連線中。</p>
+      <p class="status-line">測驗識別：Exam-Nature-b-5。不同學習者與訪客使用分開的本機進度。</p>
+    </div>
+    <div>
+      <button id="open-learner" class="soft-btn" type="button">選擇／建立學習者</button>
+      <button id="use-guest" class="soft-btn" type="button" hidden>切換訪客</button>
+    </div>
+  </section>
+
+  <section class="summary-strip" aria-label="測驗即時統計" aria-live="polite">
+    <div class="stat"><strong id="stat-answered">0</strong><span>已作答</span></div>
+    <div class="stat"><strong id="stat-left">50</strong><span>尚餘</span></div>
+    <div class="stat"><strong id="stat-correct">0</strong><span>答對</span></div>
+    <div class="stat"><strong id="stat-wrong">0</strong><span>答錯</span></div>
+  </section>
+
+  <main class="layout">
+    <nav class="question-nav" aria-label="題號快速導覽">
+      <h2>題號導覽</h2>
+      <div id="nav-grid" class="nav-grid"></div>
+      <div class="nav-actions">
+        <button id="first-unanswered" class="soft-btn" type="button">跳到第一題未作答</button>
+        <button id="to-top" class="soft-btn" type="button">回到頁首</button>
+        <button id="reset-btn" class="soft-btn" type="button">重新開始全部</button>
+      </div>
+    </nav>
+
+    <section class="questions" aria-label="自然科題目與解析">
+      <div id="questions"></div>
+      <section class="submit-panel" aria-labelledby="submit-title">
+        <h2 id="submit-title">完成測驗</h2>
+        <p>全部 50 題作答後才能查看本輪總成績；每題第一次作答即鎖定。</p>
+        <button id="submit-btn" class="primary-btn" type="button" disabled>尚有 50 題未作答</button>
+        <div id="result-panel" class="result-panel" hidden></div>
+      </section>
+    </section>
+  </main>
+
+  <div id="image-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-title">
+    <div class="modal__inner">
+      <div class="modal__bar">
+        <strong id="modal-title">題目放大檢視</strong>
+        <button id="modal-close" class="soft-btn" type="button">關閉</button>
+      </div>
+      <div id="modal-image" class="modal__image"></div>
+    </div>
+  </div>
+
+  <dialog id="learner-dialog" aria-labelledby="learner-dialog-title">
+    <form method="dialog">
+      <h2 id="learner-dialog-title">選擇學習者</h2>
+      <p>共享暱稱不是私人帳號；請用暱稱與識別碼確認選到同一筆資料。</p>
+      <div id="learner-list"></div>
+      <label>新學習者暱稱 <input id="new-learner-name" maxlength="20" autocomplete="off"></label>
+      <label>頭像
+        <select id="new-learner-avatar">
+          <option value="cat">🐱</option><option value="dog">🐶</option><option value="rabbit">🐰</option>
+          <option value="panda">🐼</option><option value="fox">🦊</option><option value="dna">🧬</option><option value="chem">⚗️</option>
+        </select>
+      </label>
+      <p id="learner-message" class="status-line"></p>
+      <div>
+        <button id="create-learner" class="primary-btn" type="button">建立學習者</button>
+        <button class="soft-btn" value="cancel">關閉</button>
+      </div>
+    </form>
+  </dialog>
+
+  <p id="live-status" class="visually-hidden" aria-live="polite"></p>
+  <noscript><p class="noscript">JavaScript 目前未啟用。題目截圖仍可由下載套件中的 assets 資料夾查看；互動作答、字級調整與解析切換需要啟用 JavaScript。</p></noscript>
+</body>
+</html>
