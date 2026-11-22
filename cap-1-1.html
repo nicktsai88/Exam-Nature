@@ -26,7 +26,23 @@
 html[data-pending] :is(.first-only,.facts,.layout,#count,#score,#remain,#meter,#submit,#clash){display:none}
 #chapterPending{border-left:.32rem solid var(--teal);scroll-margin-top:calc(var(--bar) + .6rem)}
 .structured fieldset{margin:0;min-width:0;border:1px solid var(--line);border-radius:.6rem}.structured fieldset label{display:inline-flex;align-items:center;padding:.3em}.structured input{accent-color:var(--teal)}
-@media screen{.card>.paper{width:81%}}@media screen and (min-width:1800px){.card>.paper{max-width:58.32rem}}@media screen and (max-width:780px){.card>.paper{width:86.4%}}</style></head><body>
+@media screen{.card>.paper{width:81%}}@media screen and (min-width:1800px){.card>.paper{max-width:58.32rem}}@media screen and (max-width:780px){.card>.paper{width:86.4%}}@media screen {
+  html[data-ipad] .card>.paper {width:100%;max-width:none}
+  html[data-ipad] .choices button, html[data-ipad] .structured select {font-size:1.2rem;min-height:48px}
+}
+@media screen and (min-width:781px) {
+  html[data-ipad] .wrap {width:95%}
+  html[data-ipad] .layout {grid-template-columns:clamp(144px,15vw,190px) minmax(0,1fr);gap:.75rem}
+  html[data-ipad] .side {padding:.6rem;overflow-wrap:anywhere}
+  html[data-ipad] .side .jumpgrid {grid-template-columns:repeat(auto-fit,minmax(min(100%,2.8rem),1fr));gap:.2rem}
+  html[data-ipad] .side .jumpgrid a {display:grid;place-items:center;min-height:44px}
+  html[data-ipad] .side :is(button,select,input) {max-width:100%}
+}
+</style><script>
+if (/iPad/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+  document.documentElement.dataset.ipad = '';
+}
+</script></head><body>
 <header class="top"><div class="wrap tools"><div class="brand"><svg aria-hidden="true" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 25c10 1 19-5 21-20C14 6 4 10 4 20c0 3 2 5 5 5M3 29 21 11"/></svg>自然科學</div><div class="cluster" aria-label="學習介面"><select id="chapter" aria-label="生物第 1 冊章節"></select><button id="study">📘 解析介面</button><button id="test">✏️ 測驗介面</button></div><div class="cluster" aria-label="字級設定"><button id="sm">A− 縮小字級</button><button id="reset">重設 100%</button><button id="lg">A＋ 放大字級</button><output id="pct" aria-live="polite" aria-label="目前字級"></output></div></div><div class="wrap userbar"><b id="who">訪客</b><button id="switcher">切換使用者</button><small id="syncStatus" role="status">僅存本機</small><button id="reconnect">重新連線</button><span id="count"></span><span id="score"></span><span id="remain"></span><progress id="meter" max="304" value="0" aria-label="本輪進度"></progress><button id="submit" disabled>交卷</button></div></header>
 <main class="wrap"><div class="mast"><div><p>116 年國中會考｜翰林｜國中自然科學</p><h1>生物第 1 冊<br><span id="chapterTitle">第 1 章　生命世界與科學方法</span></h1><p class="first-only">生命現象、生物圈、顯微鏡與實驗設計</p><div class="facts"><span><b>304 題</b>全卷題數</span><span><b>247 題</b>單一選擇</span><span><b>18 組</b>共 57 道小題</span></div></div></div>
 <div class="entries"><button id="enterStudy"><b>📘　題目解析教學</b><small>閱讀原卷題圖與每個選項的判斷依據</small></button><button id="enterTest"><b>✏️　開始／繼續測驗</b><small>每題作答後，立即核對答案與解析</small></button></div>
