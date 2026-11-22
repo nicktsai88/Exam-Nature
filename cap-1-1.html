@@ -8,6 +8,19 @@
 
 :root{--ink:#322d57;--muted:#625f75;--line:#e1deeb;--bg:#fcfaf7;--teal:#6240bc}button{border-radius:1.4em}.top{background:#fffdf9f5;box-shadow:0 3px 15px #4e428913}.brand{color:#423579}.userbar{padding:.4rem 0;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.84rem}.userbar span,.userbar b,.userbar small,#pct{border:1px solid var(--line);border-radius:2em;background:white;padding:.26em .55em}.userbar progress{width:5rem;accent-color:#7850db}#pct{color:#5c32a6;background:#f2ecff}.mast{padding:clamp(1.5rem,4vw,3.25rem);margin:1.15rem 0;border-radius:1.6rem;background:linear-gradient(119deg,#f3a079 0%,#df7faa 31%,#9078df 67%,#77b9ee 100%);color:white;box-shadow:0 .6rem 1.5rem #7763bc20}.mast h1{margin:.5rem 0;font-size:clamp(2rem,3.4vw,3.6rem)}.mast p{color:white}.facts,.entries{display:flex;gap:.7rem;flex-wrap:wrap}.facts{margin-top:1rem}.facts span{display:grid;min-width:7rem;padding:.65rem .9rem;border:1px solid #ffffff68;border-radius:.8rem;background:#ffffff26}.entries button{flex:1 1 16rem;text-align:left;color:white;padding:1.2rem 1.6rem;border-radius:1.2rem;border:0;background:linear-gradient(115deg,#407ded,#783de5)}.entries button+button{background:linear-gradient(110deg,#dc567b,#ef832e)}.entries small{display:block;margin-top:.3rem}.panel{background:white;border:1px solid var(--line);padding:1.25rem;border-radius:1.1rem;margin:1rem 0;scroll-margin-top:calc(var(--bar) + .6rem)}#personForm{align-items:end;margin-top:.7rem}label input,label select{display:block;max-width:100%}#profiles button{background:#f6f1ff}.feedback{background:#f7f5ff}.feedback li{background:white;border:1px solid #e4dfef!important;border-radius:.7rem;padding:.6rem;margin:.4rem 0}.qhead{flex-wrap:wrap}.booknote{color:#9a503c}.side button{font-size:.86rem;margin:.12rem 0}.side{background:#fffdfb}.filters button[aria-pressed=true],.tools button[aria-pressed=true]{background:linear-gradient(105deg,#4286f4,#7140d6)}.layout>div{min-width:0}#past{max-height:65vh;overflow:auto}.deck{scroll-margin-top:calc(var(--bar) + .6rem)}.userbar #who{max-width:100%;overflow-wrap:anywhere}.entries button:hover:not(:disabled){filter:brightness(.95);color:#40336d}
 @media(max-width:780px){.userbar{flex-wrap:nowrap;overflow:auto;max-width:95vw;white-space:nowrap}.userbar>*{flex:none}.tools{justify-content:center}.facts span{min-width:0}.entries button{padding:.8rem 1rem}.panel{padding:.8rem}.mast h1{font-size:1.7rem}#personForm label{width:100%}#personForm input{width:100%}}
+
+@media(min-width:781px){.layout{grid-template-columns:clamp(16rem,23vw,21rem) minmax(0,1fr)}}
+.side summary,.side h2{font-size:1.24rem}
+.side .jumpgrid{gap:.38rem}
+.jumpgrid a{font-size:1.05rem;font-weight:700;padding:.4rem .1rem}
+.side label,.side button,.side .minor{font-size:1rem}
+.answer-good,.answer-bad{--tone:#126337;--wash:#ebfaf0;--edge:#299958}
+.answer-bad{--tone:#982632;--wash:#fff0f2;--edge:#cf4153}
+.choices button.answer-good,.choices button.answer-bad,.feedback li.answer-good,.feedback li.answer-bad,.result-chip,.feedback .result-banner{color:var(--tone);background:var(--wash);border:2px solid var(--edge)!important}
+.choices small{display:block;font-size:.72em;font-weight:700}
+.result-chip{padding:.18em .65em;border-radius:2em;font-weight:750}
+.feedback .result-banner{padding:.65rem .85rem;border-width:0 0 0 .33rem!important;border-radius:.5rem;font-weight:700}
+.option-label{display:block;color:var(--tone);font-size:.9em}
 </style></head><body>
 <header class="top"><div class="wrap tools"><div class="brand"><svg aria-hidden="true" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 25c10 1 19-5 21-20C14 6 4 10 4 20c0 3 2 5 5 5M3 29 21 11"/></svg>自然科學</div><div class="cluster" aria-label="學習介面"><button id="study">📘 解析介面</button><button id="test">✏️ 測驗介面</button></div><div class="cluster" aria-label="字級設定"><button id="sm">A− 縮小字級</button><button id="reset">重設 100%</button><button id="lg">A＋ 放大字級</button><output id="pct" aria-live="polite" aria-label="目前字級"></output></div></div><div class="wrap userbar"><b id="who">訪客</b><button id="switcher">切換使用者</button><small id="syncStatus" role="status">僅存本機</small><button id="reconnect">重新連線</button><span id="count"></span><span id="score"></span><span id="remain"></span><progress id="meter" max="304" value="0" aria-label="本輪進度"></progress><button id="submit" disabled>交卷</button></div></header>
 <main class="wrap"><div class="mast"><div><p>116 年國中會考｜翰林｜國中自然科學</p><h1>第 1 冊・第 1 章<br>生命與科學探究</h1><p>生命現象、生物圈、顯微鏡與實驗設計</p><div class="facts"><span><b>304 題</b>全卷題數</span><span><b>247 題</b>單一選擇</span><span><b>18 組</b>共 57 道小題</span></div></div></div>
@@ -108,7 +121,42 @@ function draw(i){const q=questions[i],a=answers[q.id],box=cards[i].querySelector
  s+='<p><b>'+(q.key==='填答'?'參考答案　控制變因為甲、乙；操作變因為丙':isExcluded(q)?'原卷答案 A · 題意有疑義，不計分':'正確答案　'+q.key)+'</b></p>';
  if(mode==='study'&&state.wrongBook[q.id])s+='<p>上次答錯時選了 '+escapeHTML(state.wrongBook[q.id].choice)+'。'+(state.wrongBook[q.id].mastered?'已在重練時答對。':'可對照下方解析複習。')+'</p>';if(q.key==='填答')s+='<p>兩組都用檸檬皮去除口紅漬，所以果皮種類（甲）和汙漬種類（乙）要相同。研究者刻意改變水溫（丙），再比較去汙效果。</p>';
  else s+='<ul>'+q.notes.map((v,j)=>'<li><b>'+abc[j]+'</b><span>'+escapeHTML(v)+'</span></li>').join('')+'</ul>';
- s+='</div>'}box.innerHTML=s;links[i].className=a&&graded?(isCorrect(q,a)?'right':'wrong'):'';links[i].setAttribute('aria-label',title(q)+(a?'，已作答':'，未作答'))}
+ s+='</div>'}box.innerHTML=s;
+const tested = mode === 'test' && !!a;
+const header = cards[i].querySelector('.qhead');
+header.querySelector('.result-chip')?.remove();
+if (tested && graded) {
+ const right = isCorrect(q,a);
+ const verdict = right ? '✓ 答對' : '✕ 答錯';
+ const tone = right ? 'answer-good' : 'answer-bad';
+ const chip = document.createElement('span');
+ chip.className = 'result-chip ' + tone;
+ chip.textContent = verdict;
+ header.querySelector('.cluster').prepend(chip);
+ const banner = box.querySelector('.feedback p');
+ banner.className = 'result-banner ' + tone;
+ const solution = q.key === '填答' ? '甲乙/丙' : q.key;
+ banner.textContent = verdict + '！你的答案：' + a + (right ? '。' : '。正確答案：' + solution + '。');
+ for (const button of box.querySelectorAll('[data-choice]')) {
+  const letter = button.dataset.choice;
+  if (letter !== q.key && letter !== a) continue;
+  button.classList.add(letter === q.key ? 'answer-good' : 'answer-bad');
+  const tag = document.createElement('small');
+  tag.textContent = letter === a ? '你的答案' : '正確答案';
+  button.append(tag);
+  button.setAttribute('aria-label',button.getAttribute('aria-label') + '，' + tag.textContent);
+ }
+ box.querySelectorAll('.feedback li').forEach((row,j)=>{
+  const letter = abc[j];
+  if (letter !== q.key && letter !== a) return;
+  row.classList.add(letter === q.key ? 'answer-good' : 'answer-bad');
+  const label = document.createElement('strong');
+  label.className = 'option-label';
+  label.textContent = letter === q.key ? '✓ 正確選項' : '✕ 你選的錯誤選項';
+  row.querySelector('span').prepend(label);
+ });
+}
+links[i].className=a&&graded?(isCorrect(q,a)?'right':'wrong'):'';links[i].setAttribute('aria-label',title(q)+(a?'，已作答':'，未作答'))}
 function labelType(s){return s.practiceType==='full'?'完整測驗':'錯題重練'}
 function stats(s){let right=0,wrong=0,done=0;for(const id of s.targets){const a=s.answers[id];if(!a)continue;done++;if(id==='17')continue;if(isCorrect(questions[ids.indexOf(id)],a))right++;else wrong++}return {right,wrong,done,total:s.targets.length,graded:s.targets.filter(k=>k!=='17').length}}
 function info(msg){$('syncStatus').textContent=msg}
