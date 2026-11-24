@@ -38,7 +38,10 @@ html[data-pending] :is(.first-only,.facts,.layout,#count,#score,#remain,#meter,#
   html[data-ipad] .side .jumpgrid a {display:grid;place-items:center;min-height:44px}
   html[data-ipad] .side :is(button,select,input) {max-width:100%}
 }
-html[data-mode="test"] .choices{grid-template-columns:repeat(4,minmax(0,1fr))}.choices button{border-radius:999px}html[data-mode="test"] .choices button{border-radius:1.25rem}.paper .key-highlight{background:#ffed36!important;opacity:.83}.reason-clue mark{background:#fff23c;color:#242127;padding:.06em .18em}.feedback .field-reason{grid-template-columns:1fr}.reason-kind{display:block;margin-top:.25em;color:#524c66}.review-caution{border-left:.25rem solid #9e761c;padding:.5rem;background:#fff8d8}.original-work{margin-top:.6rem}.original-work img{max-width:100%;height:auto;vertical-align:middle}.original-work table{border-collapse:collapse}.original-work td{border:1px solid #a6a1af;padding:.3rem}</style><script>
+html[data-mode="test"] .choices{grid-template-columns:repeat(4,minmax(0,1fr))}.choices button{border-radius:999px}html[data-mode="test"] .choices button{border-radius:1.25rem}.paper .key-highlight{background:#ffed36!important;opacity:.83}.reason-clue mark{background:#fff23c;color:#242127;padding:.06em .18em}.feedback .field-reason{grid-template-columns:1fr}.reason-kind{display:block;margin-top:.25em;color:#524c66}.review-caution{border-left:.25rem solid #9e761c;padding:.5rem;background:#fff8d8}.original-work{margin-top:.6rem}.original-work img{max-width:100%;height:auto;vertical-align:middle}.original-work table{border-collapse:collapse}.original-work td{border:1px solid #a6a1af;padding:.3rem}
+html[data-mode] .choices{width:100%;max-width:23.5rem;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(.3rem,1vw,.7rem)}
+html[data-mode] .choices button{min-width:0;min-height:3.5rem;border-radius:1.25rem;padding:.3rem .15rem}
+</style><script>
 if (/iPad/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
   document.documentElement.dataset.ipad = '';
 }
@@ -219,8 +222,7 @@ function draw(i){const q=questions[i],a=answers[q.id],box=cards[i].querySelector
  if(q.why){
   const letters=q.letters||abc;
   s+='<ul>'+q.why.map((reason,j)=>{
-   const outcome=!graded?'原卷參考':letters[j]===q.key?'本題應選':'本題不選';
-   return '<li><b>'+letters[j]+'</b><span><strong>'+outcome+' · '+escapeHTML(q.optionRows[j])+'</strong><br>'+escapeHTML(reason)+(q.coverage[j]==='待核實'?'':'<small class="reason-kind">'+escapeHTML(q.coverage[j])+'</small>')+'</span></li>';
+   return '<li><b>'+letters[j]+'</b><span>'+escapeHTML(reason)+'</span></li>';
   }).join('')+'</ul>';
  }else if(q.fieldReasons){
   s+='<ul>'+q.fieldReasons.map(([label,reason])=>'<li class="field-reason"><span><b>'+escapeHTML(label)+'</b><br>'+escapeHTML(reason)+'</span></li>').join('')+'</ul>';
@@ -263,7 +265,7 @@ if (tested && graded) {
   row.classList.add(letter === q.key ? 'answer-good' : 'answer-bad');
   const label = document.createElement('strong');
   label.className = 'option-label';
-  label.textContent = letter === q.key ? '✓ 本題應選' : '✕ 你選的選項';
+  label.textContent = letter === q.key ? '✓ 正確選項' : '✕ 你選的錯誤選項';
   row.querySelector('span').prepend(label);
  });
 }
