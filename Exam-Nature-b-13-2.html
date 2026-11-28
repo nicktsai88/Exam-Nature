@@ -7511,8 +7511,8 @@ async function initializeCloud(force = false) {
       auth = f.getAuth(firebaseApp);
       db = f.getFirestore(firebaseApp);
       if (!auth.currentUser) await f.signInAnonymously(auth);
+      setState(navigator.onLine ? '已登入・確認雲端名單…' : '離線・待同步', navigator.onLine ? 'normal' : 'error');
       startGlobalListener();
-      setState(navigator.onLine ? '已連線' : '離線・待同步', navigator.onLine ? 'success' : 'error');
       return true;
     } catch (error) {
       console.warn('Firebase initialization failed:', error);
@@ -7526,7 +7526,7 @@ async function initializeCloud(force = false) {
 }
 
 async function ensureReady() {
-  const okay = await initializeCloud().then(ok=>{const who=appUi()?.getIdentity?.();if(ok&&who?.type==='learner')listenLearner(who.learnerId,appUi().getUnitId());});
+  const okay = await initializeCloud();
   if (!okay || !db || !auth?.currentUser) throw new Error(localOnlyReason());
 }
 
@@ -7882,7 +7882,17 @@ function resume() {
 }
 
 window.ExamCloud = {
-  createLearner,
+  createLearner: async (...args) => {
+    try { return await createLearner(...args); }
+    catch (error) {
+      const code = String(error?.code || '');
+      if (code === 'permission-denied' || code.endsWith('/permission-denied')) {
+        setState('資料權限不足・本機可用', 'error');
+        throw new Error('Firebase 已登入，但本題庫的讀寫權限不足（permission-denied）。請核對此頁提供的 Exam-Nature-b-13-1 Firestore Rules。');
+      }
+      throw error;
+    }
+  },
   selectLearner,
   listenLearner,
   cancelLearnerListener,
